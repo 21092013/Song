@@ -127,11 +127,11 @@ body.compact .hero h1{font-size:clamp(30px,8vw,42px)}
 </section>
 </main>
 
-<script src="peerjs.min.js"></script>
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <script>
 const $=id=>document.getElementById(id), esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const LEN=[1,3,8], PTS=[5,3,1];
-let room=null, mode=null, H=null, S=null, myTeam=-1, code='', songs=[], timer=null;
+let mode=null, H=null, S=null, myTeam=-1, code='', songs=[], timer=null;
 const audio=new Audio();
 function show(id){document.body.classList.toggle('compact',id!=='land');['land','hostSetup','hostGame','teamJoin','teamPlay'].forEach(x=>$(x).hidden=x!==id)}
 
@@ -181,7 +181,7 @@ $('start').onclick=()=>{
   if(!songs.length){alert('בחרו לפחות שיר אחד');return}
   const teams=[...document.querySelectorAll('.tn')].map((i,k)=>i.value.trim()||'קבוצה '+(k+1));
   const msg=$('startMsg');msg.textContent='';
-  if(typeof Peer==='undefined'){msg.textContent='קובץ peerjs.min.js לא נטען. ודאו שהוא הועלה לאותה תיקייה של index.html.';return}
+  if(typeof Peer==='undefined'){msg.textContent='ספריית PeerJS לא נטענה. בדקו חיבור לאינטרנט ורעננו את הדף.';return}
   $('start').disabled=true;msg.textContent='מתחבר לשרת המשחק…';
   const fail=setTimeout(()=>{$('start').disabled=false;msg.textContent='לא הצלחתי להתחבר לשרת המשחק. בדקו אינטרנט, נסו רשת אחרת (סלולרי) ולחצו שוב.'},10000);
   openHost(c=>{
@@ -225,7 +225,6 @@ function renderHost(){
   const s=songs[H.i]||{name:''};
   $('hNum').textContent=H.phase==='end'?'סיום':`שיר ${H.i+1}/${songs.length}`;
   $('hPts').innerHTML=H.phase==='end'?'🏆':`<b>${PTS[H.stage]}</b>נקודות`;document.body.classList.toggle('play',['open','revealed'].includes(H.phase));
-  
   const st={idle:'מוכנים? לחצו על ״נגן קטע״',open:'מנגן… הקבוצות יכולות ללחוץ',locked:`${H.teams[H.buzz]} לחצו ראשונים!`,
     wrong:`${H.teams[H.buzz]} טעו`,revealed:`🎉 ${s.name}`,end:'המשחק נגמר 🏆'}[H.phase];
   $('hStatus').textContent=st;
