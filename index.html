@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>חידון ניחוש שירים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;800&family=Secular+One&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#0d0a12;--card:rgba(255,255,255,.045);--tx:#f6f1e8;--mut:#9a93ab;--pink:#ff3fa4;--amber:#ffb23f;--bd:rgba(255,255,255,.1);--red:#ef1c2f;--ok:#22c55e;
+--disp:"Secular One","Arial Black",Impact,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:radial-gradient(900px 500px at 100% -10%,#4d1c42 0%,transparent 60%),radial-gradient(600px 400px at 0% 110%,#2a1236 0%,transparent 60%),var(--bg);background-attachment:fixed;color:var(--tx);font-family:Heebo,system-ui,Arial,sans-serif;min-height:100vh;overflow-x:hidden}
+main{max-width:640px;margin:0 auto;padding:16px 16px 40px}
+.hero{position:relative;height:210px;margin:6px 0 18px}
+.hero .txt{position:absolute;inset:0 0 0 auto;width:62%;display:flex;flex-direction:column;justify-content:center;z-index:2}
+.eyebrow{color:var(--amber);font-weight:800;letter-spacing:2px;font-size:13px}
+.hero h1{font-family:var(--disp);font-weight:400;margin:4px 0 0;line-height:.98;font-size:clamp(38px,11vw,58px)}
+.hero h1 .a{display:block;color:#b7aec6}
+.hero h1 .b{display:inline-block;color:var(--pink);position:relative;padding-bottom:8px}
+.hero h1 .b::after{content:"";position:absolute;right:0;left:0;bottom:0;height:6px;border-radius:6px;background:var(--amber);transform:rotate(-1.5deg)}
+.vinyl{position:absolute;left:-95px;top:-6px;width:250px;height:250px;border-radius:50%;
+background:radial-gradient(circle,transparent 0 34%,#0000 34%),repeating-radial-gradient(circle,#15121c 0 2px,#0b0910 2px 4px),#0b0910;
+box-shadow:0 0 0 1px #2a2536,0 20px 50px rgba(0,0,0,.6);animation:spin 3.2s linear infinite;animation-play-state:paused;z-index:1}
+.vinyl::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 20deg,transparent 0 20%,rgba(255,255,255,.12) 25%,transparent 32% 70%,rgba(255,255,255,.1) 76%,transparent 82%)}
+.vinyl::after{content:"";position:absolute;inset:33%;border-radius:50%;background:var(--pink);box-shadow:inset 0 0 0 8px #ff6bb9,0 0 0 1px #0006}
+.vinyl i{position:absolute;z-index:2;left:50%;top:50%;width:12px;height:12px;margin:-6px;border-radius:50%;background:#0d0a12}
+body.play .vinyl{animation-play-state:running}
+@keyframes spin{to{transform:rotate(360deg)}}
+h2{font-family:var(--disp);font-weight:400;font-size:21px;margin:0 0 10px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:22px;padding:18px;margin-bottom:14px;backdrop-filter:blur(6px)}
+button{font:inherit;font-weight:800;cursor:pointer;border:0;border-radius:99px;padding:13px 22px;background:#f6f1e8;color:#16111c}
+button:hover:not(:disabled){filter:brightness(1.06)}
+button.sec{background:#221c2d;color:var(--tx);border:1px solid var(--bd)}
+button.ok{background:var(--ok);color:#06210f}button.bad{background:var(--pink);color:#2b0318}
+button:disabled{opacity:.4;cursor:not-allowed}
+input[type=text],input[type=number]{font:inherit;width:100%;padding:12px 14px;border-radius:14px;border:1px solid var(--bd);background:rgba(0,0,0,.35);color:var(--tx);margin-bottom:8px}
+input:focus{outline:2px solid var(--pink);outline-offset:1px}
+input[type=file]{color:var(--mut);max-width:100%}
+input[type=checkbox]{accent-color:var(--pink);width:20px;height:20px}
+.row{display:flex;gap:10px;flex-wrap:wrap}.row>*{flex:1}
+.mut{color:var(--mut);font-size:14px}.big{font-size:22px;font-weight:800;text-align:center}
+.code{font-family:var(--disp);font-size:54px;letter-spacing:10px;text-align:center;color:var(--amber);direction:ltr;line-height:1.1}
+.score{display:flex;justify-content:space-between;align-items:center;padding:11px 4px;border-bottom:1px dashed var(--bd);font-size:18px}
+.score:last-child{border:0}.score b{font-family:var(--disp);font-weight:400;font-size:26px;color:var(--amber)}
+.score.hit{color:var(--pink);font-weight:800}
+.pill{display:inline-block;border:1.5px solid var(--pink);color:var(--pink);border-radius:99px;padding:3px 14px;font-weight:800;flex:0 0 auto}
+.sticker{flex:0 0 auto;width:92px;height:92px;border-radius:50%;background:var(--amber);color:#1a1020;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(-12deg);font-weight:800;font-size:13px;line-height:1;box-shadow:0 8px 20px rgba(255,178,63,.25)}
+.sticker b{font-family:var(--disp);font-weight:400;font-size:42px;line-height:1}
+#buzz{width:min(74vw,300px);height:min(74vw,300px);border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff5a68,var(--red) 55%,#b30f1e);color:#fff;font-family:var(--disp);font-weight:400;font-size:34px;line-height:1.1;box-shadow:0 0 0 10px rgba(239,28,47,.18),0 0 0 22px rgba(239,28,47,.08),0 12px 0 #7f0b16,0 22px 40px rgba(0,0,0,.5);display:block;margin:34px auto;transition:transform .08s}
+#buzz:active:not(:disabled){transform:translateY(9px);box-shadow:0 0 0 10px rgba(239,28,47,.18),0 0 0 22px rgba(239,28,47,.08),0 3px 0 #7f0b16}
+#buzz:disabled{background:radial-gradient(circle at 35% 30%,#5d5868,#3f3a4a);box-shadow:0 12px 0 #26222e;color:#9a93ab;opacity:1}
+.song{max-height:320px;overflow:auto;font-size:14px;margin-top:10px}.sh{display:flex;justify-content:space-between;color:var(--mut);font-size:13px;padding:0 4px 6px}.sh span:last-child{width:90px}.sr{display:flex;gap:8px;align-items:center}.sr input[type=text]{flex:1;margin:0 0 8px}.sr input[type=number]{width:90px;flex:none;margin:0 0 8px}.sr .x{flex:none;padding:6px 11px;margin-bottom:8px}.sr .pill{margin-bottom:8px;padding:3px 10px}
+.warn{color:var(--amber)}
+.lead{font-size:19px;line-height:1.5;color:#d8d0e6;margin:0 0 18px}
+.tiles{display:grid;gap:12px;margin-bottom:14px}
+.tile{display:flex;flex-direction:column;gap:4px;text-align:right;border-radius:26px;padding:22px 24px;background:linear-gradient(135deg,#ff3fa4,#b8176a);color:#fff;box-shadow:0 14px 30px rgba(255,63,164,.22)}
+.tile b{font-family:var(--disp);font-weight:400;font-size:30px}.tile small{font-weight:400;font-size:15px;opacity:.85}
+.tile .ico{font-size:34px;line-height:1}
+.tile.alt{background:#221c2d;border:1px solid var(--bd);box-shadow:none}
+.steps{display:flex;gap:8px;justify-content:space-between}
+.step{flex:1;text-align:center;font-size:13px;color:var(--mut);display:flex;flex-direction:column;align-items:center;gap:10px}
+.sticker.sm{width:78px;height:78px;font-size:11px;transform:rotate(-8deg)}.sticker.sm b{font-size:32px}
+.sticker.sm.p{background:var(--pink);color:#2b0318;transform:rotate(6deg)}
+.sticker.sm.c{background:#f6f1e8;transform:rotate(-4deg)}
+body.compact .hero{height:120px;margin-bottom:10px}
+body.compact .vinyl{width:170px;height:170px;left:-75px;top:-20px}
+body.compact .hero h1{font-size:clamp(30px,8vw,42px)}
+</style>
+</head>
+<body>
+<main>
+<header class="hero"><div class="vinyl"><i></i></div>
+<div class="txt"><div class="eyebrow">חידון ניחוש שירים</div>
+<h1><span class="a">מי מזהה</span><span class="b">ראשון?</span></h1></div></header>
+<div id="warn" class="card mut warn" hidden>אין חיבור לשרת המשחק. בדקו אינטרנט ונסו שוב (ייתכן שהרשת חוסמת את השירות).</div>
+
+<section id="land">
+  <p class="lead">מקשיבים לקטע קצר, לוחצים ראשונים על הכפתור האדום, ומנחשים את השיר.</p>
+  <div class="tiles">
+    <button class="tile" id="bHost"><span class="ico">🎤</span><b>אני השולט</b><small>מנהל את המשחק ומנגן את השירים</small></button>
+    <button class="tile alt" id="bTeam"><span class="ico">🙋</span><b>אני קבוצה</b><small>מזינים קוד משחק ולוחצים על הכפתור</small></button>
+  </div>
+  <div class="card"><h2>איך מנקדים?</h2>
+    <div class="steps">
+      <div class="step"><div class="sticker sm"><b>5</b>נקודות</div><span>קטע של<br>שנייה אחת</span></div>
+      <div class="step"><div class="sticker sm p"><b>3</b>נקודות</div><span>עוד קצת:<br>3 שניות</span></div>
+      <div class="step"><div class="sticker sm c"><b>1</b>נקודה</div><span>הזדמנות אחרונה:<br>8 שניות</span></div>
+    </div>
+    <p class="mut" style="margin:14px 0 0">הקבוצה הראשונה שלוחצת עונה. אם טעתה, אפשר להשמיע עוד רק כשכל הקבוצות מסכימות.</p>
+  </div>
+</section>
+
+<section id="hostSetup" hidden>
+  <div class="card"><h2>כמה קבוצות?</h2>
+    <input type="number" id="nTeams" min="2" max="8" value="3">
+    <div id="names"></div></div>
+  <div class="card"><h2>השירים</h2>
+    <p class="mut">10 שירים כבר מוכנים. אפשר לשנות שם, נקודת התחלה, להסיר שיר או לערבב. השם מוצג לקבוצות כשהשיר נחשף.</p>
+    <div class="row" style="align-items:center"><button class="sec" id="shuf" style="flex:none">🔀 ערבבו</button><span class="mut" style="flex:2">אפשר להוסיף עוד שירים מהמכשיר:</span></div><input type="file" id="files" accept="audio/*" multiple>
+    <div id="songList" class="song"></div></div>
+  <button id="start" style="width:100%">התחילו משחק</button>
+</section>
+
+<section id="hostGame" hidden>
+  <div class="card"><div class="mut">קוד משחק – הקבוצות מזינות אותו</div><div class="code" id="gcode"></div></div>
+  <div class="card"><div class="row" style="align-items:center;justify-content:space-between"><span class="pill" id="hNum"></span><span id="hPts" class="sticker"></span></div>
+    <div id="hStatus" class="big" style="margin:12px 0"></div>
+    <div id="hBtns" class="row"></div></div>
+  <div class="card"><h2>ניקוד</h2><div id="hScores"></div></div>
+</section>
+
+<section id="teamJoin" hidden>
+  <div class="card"><h2>הכנסו קוד משחק</h2>
+    <input type="text" id="codeIn" inputmode="numeric" maxlength="4" placeholder="1234" style="text-align:center;font-size:28px;direction:ltr">
+    <button id="bJoin" style="width:100%">כניסה</button>
+    <p class="mut" id="joinMsg"></p>
+    <div id="pick" hidden><h2>בחרו קבוצה</h2><div id="pickBtns" class="row"></div></div></div>
+</section>
+
+<section id="teamPlay" hidden>
+  <div class="card"><div class="big" id="tName"></div><div class="mut" style="text-align:center" id="tScore"></div></div>
+  <button id="buzz">אנחנו יודעים!</button>
+  <div class="card big" id="tStatus"></div>
+</section>
+</main>
+
+<script src="peerjs.min.js"></script>
+<script>
+const $=id=>document.getElementById(id), esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const LEN=[1,3,8], PTS=[5,3,1];
+let room=null, mode=null, H=null, S=null, myTeam=-1, code='', songs=[], timer=null;
+const audio=new Audio();
+function show(id){document.body.classList.toggle('compact',id!=='land');['land','hostSetup','hostGame','teamJoin','teamPlay'].forEach(x=>$(x).hidden=x!==id)}
+
+let peer=null, conns=[], tconn=null;
+function netErr(){$('warn').hidden=false}
+function emit(t,d){if(t==='state')conns.forEach(c=>{if(c.open)c.send({t:'state',d})})}
+function openHost(cb){
+  const c=String(1000+Math.floor(Math.random()*9000));
+  const p=new Peer('songquiz-'+c);
+  p.on('open',()=>{peer=p;cb(c)});
+  p.on('error',e=>{if(e.type==='unavailable-id'){p.destroy();openHost(cb)}else netErr()});
+  p.on('connection',conn=>{
+    conns.push(conn);
+    conn.on('data',m=>{if(!m)return;if(m.t==='hello')broadcast();if(m.t==='buzz')onBuzz(m.d)});
+    conn.on('close',()=>{conns=conns.filter(x=>x!==conn)});
+  });
+}
+
+/* ---------- landing ---------- */
+$('bHost').onclick=()=>{mode='host';show('hostSetup');drawNames();drawSongs()};
+$('bTeam').onclick=()=>{mode='team';show('teamJoin')};
+
+/* ---------- host setup ---------- */
+function drawNames(){
+  const n=Math.max(2,Math.min(8,+$('nTeams').value||2)), old=[...document.querySelectorAll('.tn')].map(i=>i.value);
+  $('names').innerHTML=Array.from({length:n},(_,i)=>`<input type="text" class="tn" placeholder="שם קבוצה ${i+1}" value="${esc(old[i]||'קבוצה '+(i+1))}">`).join('');
+}
+$('nTeams').oninput=drawNames;
+const B=(id,name)=>({url:id,name,start:0});
+songs=[B('songs/s1.m4a','Riptide - Vance Joy'),B('songs/s2.m4a','The Lazy Song - Bruno Mars'),
+B('songs/s3.m4a','Lush Life - Zara Larsson'),B('songs/s4.m4a','So Easy (To Fall in Love) - Olivia Dean'),
+B('songs/s5.m4a',"Beggin' - Måneskin"),B('songs/s6.m4a','Vampire - Olivia Rodrigo'),
+B('songs/s7.m4a','Flowers - Miley Cyrus'),B('songs/s8.m4a','שיר המכולת - כוורת'),
+B('songs/s9.m4a','Liekinheitin - Linda Lampenius & Pete Parkkonen'),B('songs/s10.m4a',"Hedwig's Theme - Harry Potter")];
+function drawSongs(){
+  $('songList').innerHTML=songs.length?`<div class="sh"><span>שם השיר (התשובה)</span><span>התחלה בשנ׳</span></div>`+songs.map((s,i)=>`<div class="sr"><span class="pill">${i+1}</span><input type="text" data-n="${i}" value="${esc(s.name)}" placeholder="שם השיר" aria-label="שם שיר ${i+1}"><input type="number" data-s="${i}" value="${s.start}" min="0" aria-label="התחלה בשניות"><button class="sec x" data-x="${i}" aria-label="הסר">✕</button></div>`).join(''):'<p class="mut">אין שירים. הוסיפו קבצים.</p>';
+  $('songList').querySelectorAll('input').forEach(inp=>inp.oninput=()=>{
+    if(inp.dataset.n!==undefined)songs[inp.dataset.n].name=inp.value;else songs[inp.dataset.s].start=+inp.value||0});
+  $('songList').querySelectorAll('.x').forEach(x=>x.onclick=()=>{songs.splice(+x.dataset.x,1);drawSongs()});
+}
+$('files').onchange=e=>{
+  songs.push(...[...e.target.files].map(f=>({url:URL.createObjectURL(f),name:f.name.replace(/\.[^.]+$/,''),start:0})));
+  e.target.value='';drawSongs();
+};
+$('shuf').onclick=()=>{for(let i=songs.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[songs[i],songs[j]]=[songs[j],songs[i]]}drawSongs()};
+$('start').onclick=()=>{
+  if(!songs.length){alert('בחרו לפחות שיר אחד');return}
+  const teams=[...document.querySelectorAll('.tn')].map((i,k)=>i.value.trim()||'קבוצה '+(k+1));
+  $('start').disabled=true;
+  openHost(c=>{
+    H={code:c,teams,scores:teams.map(()=>0),i:0,stage:0,phase:'idle',buzz:-1};
+    $('gcode').textContent=H.code;show('hostGame');renderHost();broadcast();
+    setInterval(broadcast,3000);
+  });
+  setTimeout(()=>{$('start').disabled=false},6000);
+};
+
+/* ---------- host game ---------- */
+function broadcast(){
+  if(!H)return;
+  emit('state',{code:H.code,teams:H.teams,scores:H.scores,phase:H.phase,buzz:H.buzz,pts:PTS[H.stage],n:songs.length,i:H.i,name:H.phase==='revealed'?songs[H.i].name:''});
+}
+function stopAudio(){clearTimeout(timer);audio.pause()}
+function playFrom(len){
+  const s=songs[H.i];
+  const go=()=>{audio.currentTime=s.start;audio.play().catch(()=>{});if(len)timer=setTimeout(()=>audio.pause(),len*1000)};
+  stopAudio();
+  if(audio.dataset.u!==s.url){audio.dataset.u=s.url;audio.src=s.url;audio.onloadedmetadata=go}else go();
+}
+function playClip(){H.phase='open';H.buzz=-1;playFrom(LEN[H.stage]);renderHost();broadcast()}
+function onBuzz(d){
+  if(mode!=='host'||!H||!d||d.code!==H.code||H.phase!=='open')return;
+  if(!(d.team>=0&&d.team<H.teams.length))return;
+  stopAudio();H.phase='locked';H.buzz=d.team;renderHost();broadcast();
+}
+function reveal(){H.phase='revealed';playFrom(0);renderHost();broadcast()}
+function judge(ok){
+  if(ok){H.scores[H.buzz]+=PTS[H.stage];reveal()}
+  else if(H.stage>=2)reveal();
+  else{H.phase='wrong';renderHost();broadcast()}
+}
+function more(){H.stage++;H.buzz=-1;playClip()}
+function next(){
+  stopAudio();H.i++;H.stage=0;H.buzz=-1;
+  H.phase=H.i>=songs.length?'end':'idle';renderHost();broadcast();
+}
+function renderHost(){
+  const s=songs[H.i]||{name:''};
+  $('hNum').textContent=H.phase==='end'?'סיום':`שיר ${H.i+1}/${songs.length}`;
+  $('hPts').innerHTML=H.phase==='end'?'🏆':`<b>${PTS[H.stage]}</b>נקודות`;document.body.classList.toggle('play',['open','revealed'].includes(H.phase));
+  
+  const st={idle:'מוכנים? לחצו על ״נגן קטע״',open:'מנגן… הקבוצות יכולות ללחוץ',locked:`${H.teams[H.buzz]} לחצו ראשונים!`,
+    wrong:`${H.teams[H.buzz]} טעו`,revealed:`🎉 ${s.name}`,end:'המשחק נגמר 🏆'}[H.phase];
+  $('hStatus').textContent=st;
+  const b=$('hBtns');b.innerHTML='';
+  const add=(t,f,c)=>{const e=document.createElement('button');e.textContent=t;if(c)e.className=c;e.onclick=f;b.appendChild(e);return e};
+  if(H.phase==='idle')add(`▶ נגן קטע (${LEN[H.stage]} שנ׳)`,playClip);
+  if(H.phase==='open'){add('↻ נגן שוב',playClip,'sec');if(H.stage<2)moreUI(b,add)}
+  if(H.phase==='locked'){add(`✔ נכון (+${PTS[H.stage]})`,()=>judge(true),'ok');add('✘ טעו',()=>judge(false),'bad')}
+  if(H.phase==='wrong')moreUI(b,add);
+  if(['idle','open','locked','wrong'].includes(H.phase))add('חשפו את השיר',reveal,'sec');
+  if(H.phase==='revealed')add(H.i+1>=songs.length?'סיום':'השיר הבא ▶',next);
+  const mx=Math.max(...H.scores);
+  $('hScores').innerHTML=H.teams.map((t,k)=>`<div class="score ${k===H.buzz&&H.phase==='locked'?'hit':''}"><span>${H.phase==='end'&&H.scores[k]===mx?'🏆 ':''}${esc(t)}</span><b>${H.scores[k]}</b></div>`).join('');
+}
+function moreUI(b,add){
+  if(H.stage>=2)return;
+  const l=document.createElement('label');l.style.cssText='flex-basis:100%;display:flex;gap:8px;align-items:center';
+  l.innerHTML='<input type="checkbox" id="agree"> כל הקבוצות מסכימות להשמיע עוד';b.appendChild(l);
+  const e=add(`⏩ נגן עוד (${PTS[H.stage+1]} נקודות)`,more);e.disabled=true;
+  l.firstChild.onchange=ev=>e.disabled=!ev.target.checked;
+}
+
+/* ---------- team ---------- */
+$('bJoin').onclick=()=>{
+  code=$('codeIn').value.trim();if(code.length!==4)return;
+  $('joinMsg').textContent='מתחבר…';S=null;
+  if(peer)peer.destroy();
+  peer=new Peer();
+  peer.on('open',()=>{
+    tconn=peer.connect('songquiz-'+code,{reliable:true});
+    tconn.on('open',()=>tconn.send({t:'hello',code}));
+    tconn.on('data',m=>{if(m&&m.t==='state')onState(m.d)});
+    tconn.on('close',()=>{$('joinMsg').textContent='החיבור נותק. רעננו את הדף והיכנסו שוב.'});
+  });
+  peer.on('error',e=>{$('joinMsg').textContent=e.type==='peer-unavailable'?'לא נמצא משחק עם הקוד הזה. בדקו את הקוד והשולט פתוח.':'בעיית חיבור לשרת. נסו שוב.'});
+};
+function onState(d){
+  if(mode!=='team'||!d||d.code!==code)return;
+  S=d;
+  if(myTeam<0){
+    $('joinMsg').textContent='';$('pick').hidden=false;
+    $('pickBtns').innerHTML='';
+    d.teams.forEach((t,k)=>{const e=document.createElement('button');e.textContent=t;e.onclick=()=>{myTeam=k;show('teamPlay');renderTeam()};$('pickBtns').appendChild(e)});
+  }else renderTeam();
+}
+function renderTeam(){
+  document.body.classList.toggle('play',['open','revealed'].includes(S.phase));
+  $('tName').textContent=S.teams[myTeam];$('tScore').textContent=`${S.scores[myTeam]} נקודות`;
+  $('buzz').disabled=S.phase!=='open';
+  const me=S.buzz===myTeam;
+  $('tStatus').textContent={idle:'ממתינים לשיר…',open:'לחצו אם אתם יודעים!',
+    locked:me?'אתם ראשונים! ענו עכשיו 🎤':`${S.teams[S.buzz]} לחצו ראשונים`,
+    wrong:me?'טעיתם…':`${S.teams[S.buzz]} טעו`,
+    revealed:S.name?`השיר: ${S.name}`:'השיר התגלה',end:'המשחק נגמר 🏆'}[S.phase]||'';
+}
+$('buzz').onclick=()=>{$('buzz').disabled=true;if(tconn&&tconn.open)tconn.send({t:'buzz',d:{code,team:myTeam}})};
+</script>
+</body>
+</html>
