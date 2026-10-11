@@ -101,6 +101,7 @@ body.compact .hero h1{font-size:clamp(30px,8vw,42px)}
     <div class="row" style="align-items:center"><button class="sec" id="shuf" style="flex:none">🔀 ערבבו</button><span class="mut" style="flex:2">אפשר להוסיף עוד שירים מהמכשיר:</span></div><input type="file" id="files" accept="audio/*" multiple>
     <div id="songList" class="song"></div></div>
   <button id="start" style="width:100%">התחילו משחק</button>
+  <p id="startMsg" class="mut warn" style="text-align:center"></p>
 </section>
 
 <section id="hostGame" hidden>
@@ -135,7 +136,7 @@ const audio=new Audio();
 function show(id){document.body.classList.toggle('compact',id!=='land');['land','hostSetup','hostGame','teamJoin','teamPlay'].forEach(x=>$(x).hidden=x!==id)}
 
 let peer=null, conns=[], tconn=null;
-function netErr(){$('warn').hidden=false}
+function netErr(){$('warn').hidden=false;$('start').disabled=false;$('startMsg').textContent='שגיאת חיבור לשרת המשחק. נסו שוב או החליפו רשת.'}
 function emit(t,d){if(t==='state')conns.forEach(c=>{if(c.open)c.send({t:'state',d})})}
 function openHost(cb){
   const c=String(1000+Math.floor(Math.random()*9000));
@@ -179,13 +180,16 @@ $('shuf').onclick=()=>{for(let i=songs.length-1;i>0;i--){const j=Math.floor(Math
 $('start').onclick=()=>{
   if(!songs.length){alert('בחרו לפחות שיר אחד');return}
   const teams=[...document.querySelectorAll('.tn')].map((i,k)=>i.value.trim()||'קבוצה '+(k+1));
-  $('start').disabled=true;
+  const msg=$('startMsg');msg.textContent='';
+  if(typeof Peer==='undefined'){msg.textContent='קובץ peerjs.min.js לא נטען. ודאו שהוא הועלה לאותה תיקייה של index.html.';return}
+  $('start').disabled=true;msg.textContent='מתחבר לשרת המשחק…';
+  const fail=setTimeout(()=>{$('start').disabled=false;msg.textContent='לא הצלחתי להתחבר לשרת המשחק. בדקו אינטרנט, נסו רשת אחרת (סלולרי) ולחצו שוב.'},10000);
   openHost(c=>{
+    clearTimeout(fail);
     H={code:c,teams,scores:teams.map(()=>0),i:0,stage:0,phase:'idle',buzz:-1};
     $('gcode').textContent=H.code;show('hostGame');renderHost();broadcast();
     setInterval(broadcast,3000);
   });
-  setTimeout(()=>{$('start').disabled=false},6000);
 };
 
 /* ---------- host game ---------- */
