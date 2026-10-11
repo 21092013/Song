@@ -161,11 +161,11 @@ function drawNames(){
 }
 $('nTeams').oninput=drawNames;
 const B=(id,name)=>({url:id,name,start:0});
-songs=[B('songs/s1.m4a','Riptide - Vance Joy'),B('songs/s2.m4a','The Lazy Song - Bruno Mars'),
-B('songs/s3.m4a','Lush Life - Zara Larsson'),B('songs/s4.m4a','So Easy (To Fall in Love) - Olivia Dean'),
-B('songs/s5.m4a',"Beggin' - Måneskin"),B('songs/s6.m4a','Vampire - Olivia Rodrigo'),
-B('songs/s7.m4a','Flowers - Miley Cyrus'),B('songs/s8.m4a','שיר המכולת - כוורת'),
-B('songs/s9.m4a','Liekinheitin - Linda Lampenius & Pete Parkkonen'),B('songs/s10.m4a',"Hedwig's Theme - Harry Potter")];
+songs=[B('s1.m4a','Riptide - Vance Joy'),B('s2.m4a','The Lazy Song - Bruno Mars'),
+B('s3.m4a','Lush Life - Zara Larsson'),B('s4.m4a','So Easy (To Fall in Love) - Olivia Dean'),
+B('s5.m4a',"Beggin' - Måneskin"),B('s6.m4a','Vampire - Olivia Rodrigo'),
+B('s7.m4a','Flowers - Miley Cyrus'),B('s8.m4a','שיר המכולת - כוורת'),
+B('s9.m4a','Liekinheitin - Linda Lampenius & Pete Parkkonen'),B('s10.m4a',"Hedwig's Theme - Harry Potter")];
 function drawSongs(){
   $('songList').innerHTML=songs.length?`<div class="sh"><span>שם השיר (התשובה)</span><span>התחלה בשנ׳</span></div>`+songs.map((s,i)=>`<div class="sr"><span class="pill">${i+1}</span><input type="text" data-n="${i}" value="${esc(s.name)}" placeholder="שם השיר" aria-label="שם שיר ${i+1}"><input type="number" data-s="${i}" value="${s.start}" min="0" aria-label="התחלה בשניות"><button class="sec x" data-x="${i}" aria-label="הסר">✕</button></div>`).join(''):'<p class="mut">אין שירים. הוסיפו קבצים.</p>';
   $('songList').querySelectorAll('input').forEach(inp=>inp.oninput=()=>{
